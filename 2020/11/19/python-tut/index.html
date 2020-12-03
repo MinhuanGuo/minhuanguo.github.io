@@ -27,7 +27,7 @@
 </ul>
 <h2 id="网络爬虫的尺寸"><a class="markdownIt-Anchor" href="#网络爬虫的尺寸"></a> 网络爬虫的尺寸</h2>
 <p align="center">
-  <img width="80%" src="/2020/11/19/pPython-spider-TUT/spider_size.png">
+  <img width="80%" src="/2020/11/19/python-tut/spider_size.png">
 </p>
 <h1 id="第一小节"><a class="markdownIt-Anchor" href="#第一小节"></a> 第一小节</h1>
 <h2 id="http协议与requests库方法"><a class="markdownIt-Anchor" href="#http协议与requests库方法"></a> HTTP协议与Requests库方法</h2>
@@ -92,11 +92,11 @@
 <li>操作方法示意图</li>
 </ul>
 <p align="center">
-  <img width="60%" src="/2020/11/19/pPython-spider-TUT/HTTP_methods.png">
+  <img width="60%" src="/2020/11/19/python-tut/HTTP_methods.png">
 </p>
 <h3 id="3-http协议与request库"><a class="markdownIt-Anchor" href="#3-http协议与request库"></a> 3. HTTP协议与Request库</h3>
 <p align="center">
-  <img width="70%" src="/2020/11/19/pPython-spider-TUT/HTTP_methods_request.png">
+  <img width="70%" src="/2020/11/19/python-tut/HTTP_methods_request.png">
 </p>
 <ul>
 <li>Requests库的<code>head()</code>方法</li>
@@ -178,11 +178,13 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">r = requests.get(<span class="string">"https://python123.io/ws/demo.html"</span>)</span><br><span class="line">print(r.text)</span><br><span class="line">demo = r.text</span><br><span class="line">print(<span class="string">"\n\n============\n\n"</span>)</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup  <span class="comment"># 引入</span></span><br><span class="line">soup = BeautifulSoup(demo,<span class="string">"html.parser"</span>)</span><br><span class="line">print(soup.prettify())</span><br></pre></td></tr></table></figure>
 <h2 id="解析器"><a class="markdownIt-Anchor" href="#解析器"></a> 解析器</h2>
  <p align="center">
-  <img width="70%" src="/2020/11/19/pPython-spider-TUT/beautifulSoupParse.png">
+  <img width="70%" src="/2020/11/19/python-tut/beautifulSoupParse.png">
+  <br>
+  <em>解析器</em>
 </p>
 <h2 id="基本元素"><a class="markdownIt-Anchor" href="#基本元素"></a> 基本元素</h2>
 <p align="center">
-  <img width="60%" src="/2020/11/19/pPython-spider-TUT/beautifulSoupElement.png">
+  <img width="60%" src="/2020/11/19/python-tut/beautifulSoupElement.png">
 </p>
 <ul>
 <li>
@@ -195,7 +197,7 @@
 <li>Comment</li>
 </ul>
 <p align="center">
-  <img width="80%" src="/2020/11/19/pPython-spider-TUT/beautifulSoupElement1.png">
+  <img width="80%" src="/2020/11/19/python-tut/beautifulSoupElement1.png">
 </p>
 </li>
 </ul>
@@ -216,7 +218,7 @@
 </li>
 </ul>
 <h2 id="爬虫的技术实现"><a class="markdownIt-Anchor" href="#爬虫的技术实现"></a> 爬虫的技术实现</h2>
-</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">WALL-E</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://minhuanguo.github.io/2020/11/19/pPython-spider-TUT/">https://minhuanguo.github.io/2020/11/19/pPython-spider-TUT/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://minhuanguo.github.io">Hello, World!</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python-%E7%88%AC%E8%99%AB/">-Python -爬虫</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/07/17/PMSM-Control-Based-on-STM32F103/"><span>PMSM Control Based on STM32F103</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/bg2.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By WALL-E</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">WALL-E</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://minhuanguo.github.io/2020/11/19/python-tut/">https://minhuanguo.github.io/2020/11/19/python-tut/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://minhuanguo.github.io">Hello, World!</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python-%E7%88%AC%E8%99%AB/">-Python -爬虫</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/07/17/PMSM-Control-Based-on-STM32F103/"><span>PMSM Control Based on STM32F103</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/bg2.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By WALL-E</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')
   $('#top-container').addClass('is-mobile')
