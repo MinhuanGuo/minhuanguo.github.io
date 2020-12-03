@@ -7,7 +7,7 @@
     error: '复制错误',
     noSupport: '浏览器不支持'
   }
-} </script><meta name="generator" content="Hexo 4.2.1"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爬虫的简介"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫的简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是爬虫"><span class="toc-number">1.1.</span> <span class="toc-text"> 什么是爬虫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要爬虫"><span class="toc-number">1.2.</span> <span class="toc-text"> 为什么要爬虫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的尺寸"><span class="toc-number">1.3.</span> <span class="toc-text"> 网络爬虫的尺寸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一小节"><span class="toc-number">2.</span> <span class="toc-text"> 第一小节</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http协议与requests库方法"><span class="toc-number">2.1.</span> <span class="toc-text"> HTTP协议与Requests库方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-http协议概念"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 1. HTTP协议概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-http协议对资源的操作"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 2. HTTP协议对资源的操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-http协议与request库"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 3. HTTP协议与Request库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#requests库主要方法解析"><span class="toc-number">2.2.</span> <span class="toc-text"> Requests库主要方法解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#robots-协议"><span class="toc-number">2.3.</span> <span class="toc-text"> Robots 协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二小节-案例"><span class="toc-number">3.</span> <span class="toc-text"> 第二小节 ：案例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第三小节beautiful-soup"><span class="toc-number">4.</span> <span class="toc-text"> 第三小节：beautiful soup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text"> 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析案例"><span class="toc-number">4.2.</span> <span class="toc-text"> 解析案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析器"><span class="toc-number">4.3.</span> <span class="toc-text"> 解析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本元素"><span class="toc-number">4.4.</span> <span class="toc-text"> 基本元素</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第四小节"><span class="toc-number">5.</span> <span class="toc-text"> 第四小节</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫的技术实现"><span class="toc-number">5.1.</span> <span class="toc-text"> 爬虫的技术实现</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/WallET.png"></div><div class="author-info__name text-center">WALL-E</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">8</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">11</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/bg2.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Hello, World!</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="https://mirror.upupming.site" target="_blank" rel="noopener">Mirror</a><a class="site-page" href="https://music.wxhbts.com" target="_blank" rel="noopener">音乐</a><a class="site-page" href="https://writing.upupming.site" target="_blank" rel="noopener">Writing</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Python 爬虫入门</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-19</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.2k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>介绍Python爬虫的入门知识</p>
+} </script><meta name="generator" content="Hexo 4.2.1"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爬虫的简介"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫的简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是爬虫"><span class="toc-number">1.1.</span> <span class="toc-text"> 什么是爬虫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要爬虫"><span class="toc-number">1.2.</span> <span class="toc-text"> 为什么要爬虫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的尺寸"><span class="toc-number">1.3.</span> <span class="toc-text"> 网络爬虫的尺寸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一小节"><span class="toc-number">2.</span> <span class="toc-text"> 第一小节</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http协议与requests库方法"><span class="toc-number">2.1.</span> <span class="toc-text"> HTTP协议与Requests库方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-http协议概念"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 1. HTTP协议概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-http协议对资源的操作"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 2. HTTP协议对资源的操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-http协议与request库"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 3. HTTP协议与Request库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#requests库主要方法解析"><span class="toc-number">2.2.</span> <span class="toc-text"> Requests库主要方法解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬取网页的通用代码框架"><span class="toc-number">2.3.</span> <span class="toc-text"> 爬取网页的通用代码框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个例子"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 一个例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#robots-协议"><span class="toc-number">2.4.</span> <span class="toc-text"> Robots 协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二小节-案例"><span class="toc-number">3.</span> <span class="toc-text"> 第二小节 ：案例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第三小节beautiful-soup"><span class="toc-number">4.</span> <span class="toc-text"> 第三小节：beautiful soup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text"> 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析案例"><span class="toc-number">4.2.</span> <span class="toc-text"> 解析案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析器"><span class="toc-number">4.3.</span> <span class="toc-text"> 解析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本元素"><span class="toc-number">4.4.</span> <span class="toc-text"> 基本元素</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第四小节"><span class="toc-number">5.</span> <span class="toc-text"> 第四小节</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫的技术实现"><span class="toc-number">5.1.</span> <span class="toc-text"> 爬虫的技术实现</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/WallET.png"></div><div class="author-info__name text-center">WALL-E</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">8</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">11</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/bg2.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Hello, World!</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="https://mirror.upupming.site" target="_blank" rel="noopener">Mirror</a><a class="site-page" href="https://music.wxhbts.com" target="_blank" rel="noopener">音乐</a><a class="site-page" href="https://writing.upupming.site" target="_blank" rel="noopener">Writing</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Python 爬虫入门</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-19</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.6k</span><span class="post-meta__separator">|</span><span>阅读时长: 5 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>介绍Python爬虫的入门知识</p>
 <a id="more"></a>
 <p>[TOC]</p>
 <blockquote>
@@ -109,37 +109,95 @@
 <h2 id="requests库主要方法解析"><a class="markdownIt-Anchor" href="#requests库主要方法解析"></a> Requests库主要方法解析</h2>
 <ul>
 <li>
-<pre class="highlight"><code class="python">requests.request(method,url,**kwargs)
-&lt;!--￼<span class="number">0</span>--&gt;
-
-</code></pre>
+<p>request方法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">requests.request(method,url,**kwargs)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>method</code>：请求方式，对应 get/put/post/put/patch/delete/options 7种</p>
 </li>
 <li>
-<pre class="highlight"><code class="python">requests.head(url,**kwargs) 
-<span class="comment"># url:拟获取页面的url链接</span>
-<span class="comment"># **kwargs: 13个控制访问的参数</span>
-&lt;!--￼<span class="number">1</span>--&gt;
-
-</code></pre>
+<p><code>url</code>：拟获取页面的 url 链接</p>
 </li>
 <li>
-<pre class="highlight"><code class="python">requests.put(url,data=<span class="literal">None</span>,**kwargs) 
-<span class="comment"># url:拟更新页面的url链接</span>
-<span class="comment"># data:字典、字节序列或文件对象，作为Request的内容</span>
-<span class="comment"># **kwargs: 12个控制访问的参数</span>
-&lt;!--￼<span class="number">2</span>--&gt;
-
-</code></pre>
+<p><code>**kwargs</code>：控制访问的参数，共13个，均为可选项</p>
+<ul>
+<li>
+<p><strong>params</strong>：字典或字节序列，均作为参数增加到url中</p>
+<p align="center">
+<img width="90%" src="/2020/11/19/python-tut/request_params_demo.png">
+</p>
 </li>
 <li>
-<pre class="highlight"><code class="python">requests.delete(url,**kwargs) 
-<span class="comment"># url:拟获取页面的url链接</span>
-<span class="comment"># **kwargs: 13个控制访问的参数</span>
-&lt;!--￼<span class="number">3</span>--&gt;
-
-</code></pre>
+<p><strong>data</strong>：字典、字节序列或文件对象，作为Request的内容</p>
+<p align="center">
+<img width="90%" src="/2020/11/19/python-tut/request_data_demo.png">
+</p>
+</li>
+<li>
+<p><strong>json</strong>：JSON格式的数据，作为Request的内容</p>
+</li>
+<li>
+<p>headers：字典，HTTP定制头，user-agent，</p>
+</li>
+<li>
+<p>cookies：</p>
+</li>
+<li>
+<p>auth：元组</p>
+</li>
+<li>
+<p>files：字典类型，传输文件</p>
+</li>
+<li>
+<p>timeout：设定超时时间</p>
+</li>
+<li>
+<p>proxies：字典类型，设定访问代理</p>
+</li>
+<li>
+<p>allow_redirects：T/F</p>
+</li>
+<li>
+<p>stream：</p>
+</li>
+<li>
+<p>verify：</p>
+</li>
+<li>
+<p>cert：</p>
 </li>
 </ul>
+</li>
+</ul>
+</li>
+<li>
+<p>get</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">  requests.get(url,params=<span class="literal">None</span>,**kwargs) </span><br><span class="line">  <span class="comment"># url:拟获取页面的url链接</span></span><br><span class="line">  <span class="comment"># params:url中的额外参数，字典或字节流格式，可选</span></span><br><span class="line"><span class="comment"># **kwargs: 12个控制访问的参数</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>head</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">  requests.head(url,**kwargs) </span><br><span class="line">  <span class="comment"># url:拟获取页面的url链接</span></span><br><span class="line"><span class="comment"># **kwargs: 13个控制访问的参数</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>post</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">  requests.post(url,data=<span class="literal">None</span>,json=<span class="literal">None</span>,**kwargs) </span><br><span class="line">  <span class="comment"># url: 拟更新页面的url链接</span></span><br><span class="line">  <span class="comment"># data: 字典、字节序列或文件对象，作为Request的内容</span></span><br><span class="line">  <span class="comment"># json: JSON格式的数据，作为Request的内容</span></span><br><span class="line"><span class="comment"># **kwargs: 11个控制访问的参数</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>put</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">  requests.put(url,data=<span class="literal">None</span>,**kwargs) </span><br><span class="line">  <span class="comment"># url:拟更新页面的url链接</span></span><br><span class="line">  <span class="comment"># data:字典、字节序列或文件对象，作为Request的内容</span></span><br><span class="line"><span class="comment"># **kwargs: 12个控制访问的参数</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>patch</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">  requests.patch(url,data=<span class="literal">None</span>,**kwargs) </span><br><span class="line">  <span class="comment"># url:拟更新页面的url链接</span></span><br><span class="line">  <span class="comment"># data:字典、字节序列或文件对象，作为Request的内容</span></span><br><span class="line"><span class="comment"># **kwargs: 12个控制访问的参数</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>delete</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">requests.delete(url,**kwargs) </span><br><span class="line"><span class="comment"># url:拟获取页面的url链接</span></span><br><span class="line"><span class="comment"># **kwargs: 13个控制访问的参数</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="爬取网页的通用代码框架"><a class="markdownIt-Anchor" href="#爬取网页的通用代码框架"></a> 爬取网页的通用代码框架</h2>
+<h3 id="一个例子"><a class="markdownIt-Anchor" href="#一个例子"></a> 一个例子</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHTMLText</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status() <span class="comment">#如果状态不是200，引发HTTPError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"产生异常"</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    url = <span class="string">"http://www.baidu.com"</span></span><br><span class="line">    print(getHTMLText(url))</span><br></pre></td></tr></table></figure>
 <h2 id="robots-协议"><a class="markdownIt-Anchor" href="#robots-协议"></a> Robots 协议</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注释：*代表所有，/代表根目录</span></span><br><span class="line">User-agent: *</span><br><span class="line">Disallow: /</span><br></pre></td></tr></table></figure>
 <ul>
