@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="基于STM32F103的BLDC开环控制(带霍尔传感器)"><meta name="keywords" content="BLDC,STM32"><meta name="author" content="WALL-E"><meta name="copyright" content="WALL-E"><title>基于STM32F103的BLDC开环控制(带霍尔传感器) | MH's Blog</title><link rel="shortcut icon" href="/img/EVE.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 5.4.2"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text"> 硬件资源介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#stm32f103c8t6%E6%A0%B8%E5%BF%83%E6%9D%BF%E5%B8%A6%E6%8C%89%E9%94%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E6%97%8B%E8%BD%AC%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text"> STM32F103C8T6核心板，带按键功能的旋转编码器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oled%E5%B1%8F"><span class="toc-number">1.2.</span> <span class="toc-text"> OLED屏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF"><span class="toc-number">1.3.</span> <span class="toc-text"> 电机驱动板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%88%B7%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA"><span class="toc-number">1.4.</span> <span class="toc-text"> 无刷直流电机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91"><span class="toc-number">2.</span> <span class="toc-text"> 软件开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8mx%E4%B8%AD%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text"> 在MX中进行配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A4%96%E9%83%A8%E6%99%B6%E6%8C%AF%E5%92%8C%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 1. 外部晶振和系统时钟配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-sys%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 2. SYS配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6%E6%8C%89%E9%94%AE%E7%9A%84%E6%97%8B%E8%BD%AC%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 3. 带按键的旋转编码器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%9C%8D%E5%B0%94hall%E4%BC%A0%E6%84%9F%E5%99%A8"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 4. 霍尔(HALL)传感器:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-pwm%E8%BE%93%E5%87%BA"><span class="toc-number">2.1.5.</span> <span class="toc-text"> 5. PWM输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95led0"><span class="toc-number">2.1.6.</span> <span class="toc-text"> 6. 测试LED0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-iic%E9%80%9A%E8%AE%AF%E6%8E%A5%E5%8F%A3-%E8%BF%9E%E6%8E%A5oled%E5%B1%8F"><span class="toc-number">2.1.7.</span> <span class="toc-text"> 7. IIC通讯接口-连接OLED屏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%A1%86%E6%9E%B6"><span class="toc-number">2.2.</span> <span class="toc-text"> 软件框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E7%9B%AE%E6%A0%87"><span class="toc-number">2.3.</span> <span class="toc-text"> 功能目标：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 实现步骤：</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/WallET.png"></div><div class="author-info__name text-center">WALL-E</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">9</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/bg5.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">MH's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/slides">幻灯</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">基于STM32F103的BLDC开环控制(带霍尔传感器)</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-11</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>用STM32单片机开环驱动BLDC，并通过一个带按键的旋转编码器来实现BLDC的调速和换向功能。</p>
+<span id="more"></span>
+<h1 id="硬件资源介绍"><a class="markdownIt-Anchor" href="#硬件资源介绍"></a> 硬件资源介绍</h1>
+<p>本文用到的硬件包括，一块STM32F103C8T6的<strong>核心板</strong>，一块<strong>OLED屏</strong>用来显示相关参数，一个带<strong>按键功能的旋转编码器</strong>用来作为控制输入，一块兼容BLDC&amp;PMSM的无刷直流电机<strong>驱动板</strong>，一个额定电压为24V的<strong>BLDC</strong>，下面开始具体介绍。</p>
+<h2 id="stm32f103c8t6核心板带按键功能的旋转编码器"><a class="markdownIt-Anchor" href="#stm32f103c8t6核心板带按键功能的旋转编码器"></a> STM32F103C8T6核心板，带按键功能的旋转编码器</h2>
+<p>这两个部分在前面已经介绍过，参见博文：<a href="https://minhuanguo.github.io/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/">STM32_Encoder_PWM_Timer_GPIO</a>，不过需要注意的是这两者之间的连接引脚与前文并不完全一致。</p>
+<h2 id="oled屏"><a class="markdownIt-Anchor" href="#oled屏"></a> OLED屏</h2>
+<p>本文选用的是0.96’'OLED模块，像素为128×64，采用四线IIC通讯，该模块四线引脚的符号和含义如下：</p>
+<table>
+<thead>
+<tr>
+<th>OLED模板引脚</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vcc</td>
+<td>5V</td>
+</tr>
+<tr>
+<td>Gnd</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>SCL</td>
+<td>IIC总线，SCL</td>
+</tr>
+<tr>
+<td>SDA</td>
+<td>IIC总线，SDA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="电机驱动板"><a class="markdownIt-Anchor" href="#电机驱动板"></a> 电机驱动板</h2>
+<p>电机驱动板来自<a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.22522e8dkFHPWf&amp;id=543080237686&amp;_u=bkdcspof54a">硬石</a>，如下图所示，</p>
+<p>核心器件包括：</p>
+<pre><code>- 6个TLP715光耦，2个PC817光耦，实现电机驱动板和STM32单片机的电气隔离
+- 3个MOS管驱动芯片(IR2110S)，
+- 6个MOS管(IRFS3607)，
+- 1个通用运算放大器MCP6024，测量三相电流值
+- 3个电压比较器LMV331，利用三相电流进行电路保护
+- 直流母线电压检测电路，
+- 一个NTC(热敏电阻)，进行温度保护
+</code></pre>
+<p>电压输入范围 12V~60V，内部可产生11V、5V、3.3V和1.65V稳压电源。</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/motor_driver.JPG" width="70%">
+  <br>
+  <em>图：PMSM & BLDC 驱动板</em>
+</p>
+<p>该驱动板兼容BLDC和PMSM，本文仅涉及BLDC部分硬件资源。</p>
+<h2 id="无刷直流电机"><a class="markdownIt-Anchor" href="#无刷直流电机"></a> 无刷直流电机</h2>
+<p>电机来自<a target="_blank" rel="noopener" href="https://detail.tmall.com/item.htm?id=617203153371&amp;spm=a1z09.2.0.0.22522e8dkFHPWf&amp;_u=bkdcspod6ec">网店</a>，型号为24V，60W，3000RPM，</p>
+<h1 id="软件开发"><a class="markdownIt-Anchor" href="#软件开发"></a> 软件开发</h1>
+<h2 id="在mx中进行配置"><a class="markdownIt-Anchor" href="#在mx中进行配置"></a> 在MX中进行配置</h2>
+<p>配置完成之后Pinout View如下图，下面分别介绍各部分内容。</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-Pin-setup1.png" width="70%">
+  <br>
+  <em>图：引脚配置</em>
+</p>
+<h3 id="1-外部晶振和系统时钟配置"><a class="markdownIt-Anchor" href="#1-外部晶振和系统时钟配置"></a> 1. 外部晶振和系统时钟配置</h3>
+<p>选择外部<code>8M</code>HSE，配置系统时钟频率为<code>72M</code>，如下图</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-Clock.png" width="99%">
+  <br>
+  <em>图：Clock Configuration</em>
+</p>
+<h3 id="2-sys配置"><a class="markdownIt-Anchor" href="#2-sys配置"></a> 2. SYS配置</h3>
+<p>在SYS Mode and Configuration中配置如下，将自动分配：<code>PA13</code>为<code>SYS_JTMS-SWDIO</code>，<code>PA14</code>为<code>SYS_JTCK-SWCLK</code></p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-Sys.png" width="80%">
+  <br>
+  <em>图：Clock Configuration</em>
+</p>
+<h3 id="3-带按键的旋转编码器"><a class="markdownIt-Anchor" href="#3-带按键的旋转编码器"></a> 3. 带按键的旋转编码器</h3>
+<ul>
+<li>
+<p>按键输入：<strong>PA15</strong>：</p>
+<p>GPIO Mode：<code>Input mode</code></p>
+<p>GPIO Pull-up/Pull-down：<code>Pull-up</code></p>
+<p>User Label：<code>Encoder_Key</code></p>
+<p>如下图所示：</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-Key.png" width="90%">
+  <br>
+  <em>图：按键PA15的设置</em>
+</p>
+</li>
+<li>
+<p>编码器输入：<strong>PA0、PA1</strong></p>
+<p>将定时器TIM2的Combined Channels设置为<code>Encoder Mode</code>，此时Channel1(<strong>PA0</strong>)和Channel2(<strong>PA1</strong>)自动被占用，其余参数如下所示。</p>
+<p>在Parameter Settings中，设置Prescaler(PSC-16 bits value)为<code>3</code>，这样旋转编码器每转动一小“格”，计数器将加1。设置Counter Period(ARR)为<code>0xffff</code>，即计数器的最大值。</p>
+<p>在GPIO Setting中修改User Label分别为<code>encoder_A</code>和<code>encoder_B</code>，</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-Encoder.png" width="100%">
+  <br>
+  <em>图：编码器输入的设置</em>
+</p>
+</li>
+</ul>
+<p>旋钮编码器按照上述设置之后，在MDK中即可通过对应的库函数来读取编码器的值，作为用户的控制输入。</p>
+<h3 id="4-霍尔hall传感器"><a class="markdownIt-Anchor" href="#4-霍尔hall传感器"></a> 4. 霍尔(HALL)传感器:</h3>
+<p>将TIM3的Combined Channels设置为<code>XOR ON/HALL Sensor Mode</code>，此时Channel1(<strong>PA6</strong>)、Channel2(<strong>PA7</strong>)和Channel3(<strong>PB0</strong>)将自动被占用，其Parameter Settings的页面设置如下图，<font face="微软雅黑" color="#ff2c24" size="3">PSC和ARR参数的作用要进一步研究。</font></p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-Hall.png" width="100%">
+  <br>
+  <em>图：Hall传感器输入设置</em>
+</p>
+在NVIC Settings中使能中断`TIM3 global interrupt`，如下图所示：
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-TIM3-NVIC.png" width="100%">
+  <br>
+  <em>图：Hall传感器输入设置之中断</em>
+</p>
+<p>按照上述设置之后，在MDK中添加相关中断服务函数，这样当三个120°分布的HALL传感器中有一个电平有变化时，就可以产生中断，实现BLDC的六步控制。具体实现方法在下文中介绍。</p>
+<h3 id="5-pwm输出"><a class="markdownIt-Anchor" href="#5-pwm输出"></a> 5. PWM输出</h3>
+<p>这一部分是配置高级定时器TIM1，来产生三对互补PWM波输出，一对PWM波驱动一个MOS管驱动器，一个MOS管驱动器驱动两个MOS管。TIM1的设置如下图所示：</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-TIM1-PWM.png" width="100%">
+  <br>
+  <em>图：TIM1高级定时器设定</em>
+</p>
+<p>这里的设定主要有两方面：</p>
+<ul>
+<li>
+<p>将Channel1、2、3均设置成<strong>三对互补模式</strong>，即<code>PWM Generation CH1 CH1N，CH2 CH2N， CH3 CH3N</code></p>
+</li>
+<li>
+<p>设置<strong>PSC=0</strong>，<strong>ARR=3599</strong>，这样本文中三对PWM波的输出频率：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>q</mi></msub><mo>=</mo><mn>72</mn><mi>M</mi><mi mathvariant="normal">/</mi><mo stretchy="false">{</mo><mo stretchy="false">(</mo><mi>P</mi><mi>S</mi><mi>C</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>A</mi><mi>R</mi><mi>R</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">}</mo><mo>=</mo><mn>20</mn><mi>K</mi><mi>H</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">f_q = 72M/\{(PSC+1)(ARR+1)\}=20K Hz</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">7</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord">/</span><span class="mopen">{</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mopen">(</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span>，可以根据需求进行修改。</p>
+</li>
+<li>
+<p>六路PWM输出对应的管脚及其标签如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>User Label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PA8</td>
+<td>PU_H</td>
+</tr>
+<tr>
+<td>PA9</td>
+<td>PV_H</td>
+</tr>
+<tr>
+<td>PA10</td>
+<td>PW_H</td>
+</tr>
+<tr>
+<td>PB13</td>
+<td>PU_L</td>
+</tr>
+<tr>
+<td>PB14</td>
+<td>PV_L</td>
+</tr>
+<tr>
+<td>PB15</td>
+<td>PW_L</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>TIM1 按照上述设置之后，即可在MDK中修改Pulse的值，来修改互补PWM输出的占空比，从而改变BLDC的电压和转速。</p>
+<h3 id="6-测试led0"><a class="markdownIt-Anchor" href="#6-测试led0"></a> 6. 测试LED0</h3>
+<p>在STM32核心开发板中，PB12引脚通过LED灯接地。因此，在CubeMx的GPIO中，将PB12引脚设置为输出上拉模式，即<code>Output Push Pull</code>，user label设置为<code>LED0</code>，用于测试信号。、</p>
+<h3 id="7-iic通讯接口-连接oled屏"><a class="markdownIt-Anchor" href="#7-iic通讯接口-连接oled屏"></a> 7. IIC通讯接口-连接OLED屏</h3>
+<p>设置I2C1为<code>I2C</code>模式，具体参数如下图所示，</p>
+<p align="center">
+  <img src="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/CubeMx-I2C1.png" width="100%">
+  <br>
+  <em>图：I2C1通讯接口设置</em>
+</p>
+<p>设置完成之后，PB7和PB6自动被分配为<code>I2C1_SDA</code>和<code>I2C1_SCL</code></p>
+<h2 id="软件框架"><a class="markdownIt-Anchor" href="#软件框架"></a> 软件框架</h2>
+<p>本文中采用CubeMx自动产生MDK工程模板，之后在MDK中将其设置成兼容C++语言模式，参考<a href="https://minhuanguo.github.io/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/">博文</a>。</p>
+<h2 id="功能目标"><a class="markdownIt-Anchor" href="#功能目标"></a> 功能目标：</h2>
+<ol>
+<li>采用六步换相法控制BLDC，</li>
+<li>并通过按键切换旋转方向，</li>
+<li>通过旋转编码器调节BLDC的转速。</li>
+<li>OLED屏显示占空比、Hall测速和旋转方向(1/0)</li>
+</ol>
+<h3 id="实现步骤"><a class="markdownIt-Anchor" href="#实现步骤"></a> 实现步骤：</h3>
+<p><font face="微软雅黑" color="#ff2c24" size="3">未完待续</font></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">WALL-E</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://minhuanguo.github.io/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/">https://minhuanguo.github.io/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://minhuanguo.github.io">MH's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BLDC/">BLDC</a><a class="post-meta__tags" href="/tags/STM32/">STM32</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/"><i class="fa fa-chevron-left">  </i><span>兼容c++并采用轮询机制的MDK工程模板</span></a></div><div class="next-post pull-right"><a href="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/"><span>STM32_Encoder_PWM_Timer_GPIO</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/bg5.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2022 By WALL-E</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="兼容c++并采用轮询机制的MDK工程模板"><meta name="keywords" content="STM32,template"><meta name="author" content="WALL-E"><meta name="copyright" content="WALL-E"><title>兼容c++并采用轮询机制的MDK工程模板 | MH's Blog</title><link rel="shortcut icon" href="/img/EVE.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 5.4.2"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E5%85%BC%E5%AE%B9c%E7%9A%84keil%E6%A8%A1%E6%9D%BF%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text"> 一、兼容C++的Keil模板程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-stm32cubemx%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. STM32CubeMx软件配置工程模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text"> (1) 新建工程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-newproject-mcumpu-filters%E9%80%89%E6%8B%A9stm32f103c8%E7%82%B9%E5%87%BB-start-project"><span class="toc-number">1.1.2.</span> <span class="toc-text"> File -&gt; NewProject-&gt;MCU&#x2F;MPU Filters，选择“STM32F103C8”，点击 ”Start Project“</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%B0%83%E8%AF%95%E7%AB%AF%E5%8F%A3%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.3.</span> <span class="toc-text"> (3) 调试端口配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90"><span class="toc-number">1.1.4.</span> <span class="toc-text"> (4) 硬件资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%94%9F%E6%88%90%E9%A1%B9%E7%9B%AEproject-manager"><span class="toc-number">1.1.5.</span> <span class="toc-text"> (5) 生成项目Project Manager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9C%A8mdk%E4%B8%AD%E9%85%8D%E7%BD%AE%E6%88%90c%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. 在MDK中配置成c++兼容模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%9A%84mdk%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text"> (1) 修改自动生成的MDK工程文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%9A%84cpp%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text"> (2) 添加新的cpp文件，</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B5%8B%E8%AF%95%E5%B0%8F%E7%BB%93"><span class="toc-number">1.2.3.</span> <span class="toc-text"> (3) 测试小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E9%87%87%E7%94%A8%E8%BD%AE%E8%AF%A2%E6%9C%BA%E5%88%B6%E5%A4%84%E7%90%86%E5%A4%9A%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text"> 二、 采用轮询机制处理多任务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AC%AC%E4%B8%80%E6%AD%A5%E9%85%8D%E7%BD%AE%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">2.1.</span> <span class="toc-text"> 1. 第一步：配置滴答定时器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%89%8B%E5%8A%A8%E4%BD%BF%E8%83%BD"><span class="toc-number">2.1.1.</span> <span class="toc-text"> (1) 手动使能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E4%B8%AD%E6%96%AD%E6%9C%8D%E5%8A%A1%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.2.</span> <span class="toc-text"> (2) 添加中断服务函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E4%B8%AD%E6%96%AD%E6%9C%8D%E5%8A%A1%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.3.</span> <span class="toc-text"> (3) 配置中断服务函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%94%A8%E6%88%B7%E8%AE%BE%E8%AE%A1%E5%A4%9A%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.</span> <span class="toc-text"> 2. 第二步：用户设计多任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%BE%E8%AE%A1%E4%BB%BB%E5%8A%A1%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.2.1.</span> <span class="toc-text"> (1) 设计任务模板和结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%BE%E8%AE%A1%E7%94%A8%E6%88%B7%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.2.</span> <span class="toc-text"> (2) 设计用户任务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text"> 三、总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/WallET.png"></div><div class="author-info__name text-center">WALL-E</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">9</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/bg5.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">MH's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/slides">幻灯</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">兼容c++并采用轮询机制的MDK工程模板</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-13</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>创建一个基于STMCubeMx之HAL库函数版的工程模板，并且兼容C++，设计轮询形式的任务机制。</p>
+<p>在CubeMx环境下开发一个基于STM32F103C8T6的MDK工程模板，同时：</p>
+<ul>
+<li>将其设置成兼容c++模式，</li>
+<li>采用轮询机制处理多任务</li>
+</ul>
+<span id="more"></span>
+<p>[TOC]</p>
+<h1 id="一-兼容c的keil模板程序"><a class="markdownIt-Anchor" href="#一-兼容c的keil模板程序"></a> 一、兼容C++的Keil模板程序</h1>
+<h2 id="1-stm32cubemx软件配置工程模板"><a class="markdownIt-Anchor" href="#1-stm32cubemx软件配置工程模板"></a> 1. STM32CubeMx软件配置工程模板</h2>
+<h3 id="1-新建工程"><a class="markdownIt-Anchor" href="#1-新建工程"></a> (1) <strong>新建工程：</strong></h3>
+<ul>
+<li>
+<h3 id="file-newproject-mcumpu-filters选择stm32f103c8点击-start-project"><a class="markdownIt-Anchor" href="#file-newproject-mcumpu-filters选择stm32f103c8点击-start-project"></a> File -&gt; NewProject-&gt;MCU/MPU Filters，选择“STM32F103C8”，点击 ”Start Project“</h3>
+</li>
+</ul>
+<p align="center">
+  <img width="100%" src="/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/STM32CubeMx-01.png">
+</p>
+### (2) **时钟配置**
+<ul>
+<li>在Pinout &amp; Configuration中，将<strong>RCC</strong>中<strong>HSE</strong>配置成<code>“Crystal/Ceramic Resonator”</code>，即采用外部晶振；</li>
+<li>在Clock Configuration中配置系统工作频率<code>72M</code>；</li>
+</ul>
+<h3 id="3-调试端口配置"><a class="markdownIt-Anchor" href="#3-调试端口配置"></a> (3) <strong>调试端口配置</strong></h3>
+<ul>
+<li>在Pinout &amp; Configuration中，将<strong>SYS</strong>的Debug配置成<code>Serial Wire</code></li>
+</ul>
+<h3 id="4-硬件资源"><a class="markdownIt-Anchor" href="#4-硬件资源"></a> (4) <strong>硬件资源</strong></h3>
+<ul>
+<li><strong>USART2</strong>：PA2–USART2_TX，PA3–USART2_RX</li>
+<li><strong>GPIO</strong>：PB12，设置为<code>Output Push Pull</code>，标签为<code>LED0</code></li>
+</ul>
+<h3 id="5-生成项目project-manager"><a class="markdownIt-Anchor" href="#5-生成项目project-manager"></a> <strong>(5) 生成项目Project Manager</strong></h3>
+<ul>
+<li>Project：设置Project Name、Location、IDE采用“MDK-ARM”</li>
+<li>Code Generator：
+<ul>
+<li>选择“Copy only the necessary library files”，</li>
+<li>选择“Generate peripheral initialization as a pair of ‘.c/.h’ files per peripheral”(为每个外设单独初始化.c/.h文件)</li>
+</ul>
+</li>
+<li>Advanced Settings: USART、RCC、I2C和GPIO都选择HAL</li>
+</ul>
+<p align="center">
+  <img src="/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/CubeMxProjectManager.gif" width="100%">
+  <br>
+  <em>Project Manager配置</em>
+</p>
+<ul>
+<li>最后&quot;Generate Code&quot;，生成基于MDK的工程模板</li>
+</ul>
+<table><tr><td bgcolor="orange">注意：STM32CubeMx的项目路径不能有中文字符，否则生成的MDK无法打开</td></tr></table>
+<h2 id="2-在mdk中配置成c兼容模式"><a class="markdownIt-Anchor" href="#2-在mdk中配置成c兼容模式"></a> 2. 在MDK中配置成c++兼容模式</h2>
+<p>在前面导出的MDK工程模板基础上设置成C++兼容的混合编程模式。这部分工作参考了视频<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=I-el4HVXsxg">How to use KEIL Arm with c++</a>，在使用CubeMx修改硬件配置后无需另行修改代码的方法。主要内容如下：</p>
+<h3 id="1-修改自动生成的mdk工程文件"><a class="markdownIt-Anchor" href="#1-修改自动生成的mdk工程文件"></a> (1) 修改自动生成的MDK工程文件</h3>
+<ul>
+<li>Options for Target设置，在Misc Controls 中添加“–CPP --cpp11”</li>
+</ul>
+<p align="center">
+  <img width="70%" src="/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/KeilCPP.png">
+</p>
+<ul>
+<li>
+<p>在自动生成的“main.c”文件中，</p>
+<ul>
+<li>
+<p>在int main()函数之前添加两个外部声明函数（必须放在合适的位置）：</p>
+<ul>
+<li>extern void user_setup();</li>
+<li>extern void user_loop();</li>
+</ul>
+</li>
+<li>
+<p>在int main()函数内，</p>
+<ul>
+<li>while(1)前面，在<code>/* USER CODE BEGIN 2 */</code>和<code>/* USER CODE END 2 */</code>之间添加：user_setup();//用户初始化配置函数(注意添加的位置)</li>
+<li>while(1)后面，<code>/* USER CODE END WHILE */</code>前面，添加<code>user_loop();//用户循环函数</code></li>
+<li>添加完成之后，main函数如下面的代码所示</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN 1 */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE END 1 */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* MCU Configuration--------------------------------------------------------*/</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Reset of all peripherals, Initializes the Flash interface and the Systick. */</span></span><br><span class="line">  <span class="built_in">HAL_Init</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE BEGIN Init */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE END Init */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Configure the system clock */</span></span><br><span class="line">  <span class="built_in">SystemClock_Config</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE BEGIN SysInit */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE END SysInit */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Initialize all configured peripherals */</span></span><br><span class="line">  <span class="built_in">MX_GPIO_Init</span>();</span><br><span class="line">  <span class="built_in">MX_USART2_UART_Init</span>();</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN 2 */</span></span><br><span class="line">	<span class="built_in">user_setup</span>();</span><br><span class="line">  <span class="comment">/* USER CODE END 2 */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Infinite loop */</span></span><br><span class="line">  <span class="comment">/* USER CODE BEGIN WHILE */</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">		<span class="built_in">user_loop</span>();</span><br><span class="line">    <span class="comment">/* USER CODE END WHILE */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* USER CODE BEGIN 3 */</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* USER CODE END 3 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>采用这两个函数的好处在于：</p>
+<ul>
+<li>尽可能少地改变CubeMx自动生成的程序文件，以免使用CubeMx再次配置项目时出错。</li>
+<li>将这两个函数写在另一个cpp文件中，可以使用cpp语法。</li>
+<li>由函数名称可知：<code>user_setup()</code>是用户自定义的设置，只允许一次，所以放在<code>while(1)</code>的前面；而<code>user_loop()</code>是用户自定义的需要循环工作的内容，所以放在<code>while(1)</code>内部。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-添加新的cpp文件"><a class="markdownIt-Anchor" href="#2-添加新的cpp文件"></a> (2) 添加新的cpp文件，</h3>
+<ul>
+<li>
+<p>前面在MDK的<code>main.c</code>中引用了两个自定义函数，并且声明为外部定义，下面介绍这两个函数如何在外部进行定义的：</p>
+<ul>
+<li>首先，在“Src”文件夹中，新建一个c++文件，命名为“user_main.cpp”，
+<ul>
+<li><code>user_main.cpp</code>  — <font face="微软雅黑" color="#ff2c24" size="3"><strong>用户入口函数</strong></font></li>
+<li><code>main.c</code>— <font face="微软雅黑" color="#ff2c24" size="3"><strong>程序入口函数</strong></font></li>
+</ul>
+</li>
+<li>在MDK-ARM同级文件目录中，新建一个文件夹“user_libs”，并将该目录添加到Include Path中，这里将存放一些用户自定义的函数，比如与硬件相关的类等，e.g. OLed屏，BLDC，编码器等。</li>
+</ul>
+</li>
+<li>
+<p>上述操作之后，工程模板文件夹内文件如下，这里只列出了手动添加的文件，即<code>user_main.cpp</code>，其他文件夹内均是CX自动生成的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">project</span><br><span class="line">|	Drivers</span><br><span class="line">|	Inc</span><br><span class="line">| 	MDK-ARM</span><br><span class="line">|_____ Src</span><br><span class="line">	|	 user_main.cpp</span><br><span class="line">|_____ user_libs</span><br><span class="line">|	.mxproject</span><br><span class="line">|	MxProjectName.ioc</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-测试小结"><a class="markdownIt-Anchor" href="#3-测试小结"></a> (3) 测试小结</h3>
+<ul>
+<li>
+<p>下面我们测试一下这样一种兼容c++的工程模板是否能够正常工作，项目地址<a target="_blank" rel="noopener" href="https://github.com/MinhuanGuo/STM32F103C8T6-Examples.git">MyFirstSTM32_CPP</a>.</p>
+<ul>
+<li>
+<p>该项目的两个功能：(1) 通过PB12翻转LED0; (2) 通过串口2发送字符串。</p>
+</li>
+<li>
+<p><font face="微软雅黑" color="#ff2c24" size="3"><strong>用户入口函数</strong></font><code>user_main.cpp</code>内部程序：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;main.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;usart.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;gpio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">////////////////</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">user_setup</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">////////////////</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">user_loop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//功能1：控制LED0(PB12)灯亮、灭</span></span><br><span class="line">	<span class="built_in">HAL_GPIO_TogglePin</span>(LED0_GPIO_Port,LED0_Pin);</span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//功能2：串口2发送字符串</span></span><br><span class="line">	<span class="type">static</span> <span class="type">char</span> hello[] = <span class="string">&quot;Hello, World!\r\n&quot;</span>;</span><br><span class="line">	<span class="type">static</span> <span class="type">char</span> sendString[<span class="number">10</span>];</span><br><span class="line">	<span class="type">static</span> <span class="type">float</span> ticTime;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">sprintf</span>(sendString,<span class="string">&quot;%4.2f: &quot;</span>,ticTime);</span><br><span class="line">	ticTime+=<span class="number">0.1f</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">HAL_UART_Transmit</span>(&amp;huart2,(<span class="type">uint8_t</span> *)sendString,std::<span class="built_in">strlen</span>(sendString),<span class="number">10</span>);</span><br><span class="line">	<span class="built_in">HAL_UART_Transmit</span>(&amp;huart2,(<span class="type">uint8_t</span> *)hello,std::<span class="built_in">strlen</span>(hello),<span class="number">10</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//延时1s</span></span><br><span class="line">  <span class="built_in">HAL_Delay</span>(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  - 说明：</span><br><span class="line">  - `void user_setup()`函数为空，表示配置工作已经有MX自动完成，用户无需额外进行配置；</span><br><span class="line">    - `void user_loop()`函数内即为该程序需要实现的两个功能；</span><br><span class="line"></span><br><span class="line">- 程序运行结果：LED灯闪烁正常，串口助手接收数据正常，如下：</span><br><span class="line"></span><br><span class="line">  &lt;p align=&quot;center&quot;&gt;</span><br><span class="line">    &lt;img src=./2020-07-13-STM32CubeMx-based-HAL-CPP-Project-Template/串口接收字符串.gif width=&quot;80%&quot; /&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;em&gt;串口接收字符串&lt;/em&gt;</span><br><span class="line">  &lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="二-采用轮询机制处理多任务"><a class="markdownIt-Anchor" href="#二-采用轮询机制处理多任务"></a> 二、 采用轮询机制处理多任务</h1>
+<p>前面示例程序中将两个任务都放在了<code>user_loop()</code>中，并通过延时函数来调节运行速度。在一些简单的程序中可以这样应用，但是当程序中有多个复杂任务时，可采用一种称为轮询的方式。<a target="_blank" rel="noopener" href="https://github.com/MinhuanGuo/STM32F103C8T6-Examples.git">项目地址</a>/[04]_HAL_CPP_Project_Template</p>
+<h2 id="1-第一步配置滴答定时器"><a class="markdownIt-Anchor" href="#1-第一步配置滴答定时器"></a> 1. 第一步：配置滴答定时器</h2>
+<h3 id="1-手动使能"><a class="markdownIt-Anchor" href="#1-手动使能"></a> (1) 手动使能</h3>
+<ul>
+<li>修改<code>stm32f1xx_it.c</code>文件中系统时钟定时器函数<code>void SysTick_Handler(void)</code>如下：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief This function handles System tick timer.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">SysTick_Handler</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN SysTick_IRQn 0 */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE END SysTick_IRQn 0 */</span></span><br><span class="line">  <span class="built_in">HAL_IncTick</span>();</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN SysTick_IRQn 1 */</span></span><br><span class="line">	<span class="built_in">HAL_SYSTICK_IRQHandler</span>(); <span class="comment">//嘀嗒定时器中断函数启动，需要手动添加</span></span><br><span class="line">  <span class="comment">/* USER CODE END SysTick_IRQn 1 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-添加中断服务函数"><a class="markdownIt-Anchor" href="#2-添加中断服务函数"></a> (2) 添加中断服务函数</h3>
+<ul>
+<li>在<code>main.c</code>文件中添加系统嘀嗒定时器中断服务函数，如下：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//SysTick：系统嘀嗒定时器中断服务函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_SYSTICK_Callback</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">		<span class="built_in">user_systick_fun</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-配置中断服务函数"><a class="markdownIt-Anchor" href="#3-配置中断服务函数"></a> (3) 配置中断服务函数</h3>
+<ul>
+<li>其中，函数<code>user_systick_fun()</code>中的具体内容统一在<code>user_main.cpp</code>文件中编写。</li>
+<li>系统嘀嗒定时器中断服务函数的内容如下：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//滴答定时器：</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">user_systick_fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">uint8_t</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;TASK_MAX; i++)   <span class="comment">// 逐个任务        </span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> ( TaskComps[i].Status)   <span class="comment">//任务开启：TASK_ON       </span></span><br><span class="line">        &#123;</span><br><span class="line">            TaskComps[i].Timer--;     <span class="comment">// 减去一个节拍    </span></span><br><span class="line">            <span class="keyword">if</span> (TaskComps[i].Timer &lt;= <span class="number">0</span>)  <span class="comment">// 计时器时间到</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 恢复计时器值，重新下一次</span></span><br><span class="line">                TaskComps[i].Timer = TaskComps[i].ItvTime;   </span><br><span class="line">                <span class="comment">// 任务可以运行</span></span><br><span class="line">                TaskComps[i].Run = <span class="number">1</span>;    </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>嘀嗒定时器中断服务函数的任务，就是根据各个任务预设的执行频率，自动开启或关闭。其中这些结构体及其元素在第二步中介绍。</li>
+</ul>
+<h2 id="2-第二步用户设计多任务"><a class="markdownIt-Anchor" href="#2-第二步用户设计多任务"></a> 2. 第二步：用户设计多任务</h2>
+<h3 id="1-设计任务模板和结构体"><a class="markdownIt-Anchor" href="#1-设计任务模板和结构体"></a> (1) 设计任务模板和结构体</h3>
+<ul>
+<li>
+<p>在<code>user_libs</code>文件夹中新建一组cpp文件，分别命名为<code>TSK_STM_core.cpp</code>和<code>TSK_STM_core.h</code>.</p>
+</li>
+<li>
+<p><strong>在<code>TSK_STM_core.h</code>中定义任务结构体类型，如下：</strong></p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __Time_STM_core_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __Time_STM_core_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f1xx_hal.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TASK_MAX   2    <span class="comment">//任务数量</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TASK_ON    1		<span class="comment">//任务开启标志</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TASK_OFF   0		<span class="comment">//任务关闭标志</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">_TASK_COMPONENTS</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> Status;   <span class="comment">// 程序运行标记：0-不运行，1运行									     </span></span><br><span class="line">    <span class="type">uint8_t</span> Run;    <span class="comment">// 程序运行标记：0-不运行，1运行             </span></span><br><span class="line">    <span class="type">uint16_t</span> Timer; <span class="comment">// 计时器            </span></span><br><span class="line">    <span class="type">uint16_t</span> ItvTime;   <span class="comment">// 任务运行间隔时间        </span></span><br><span class="line">    <span class="built_in">void</span> (*TaskHook)(<span class="type">void</span>);   <span class="comment">// 要运行的任务函数  </span></span><br><span class="line">&#125; TASK_COMPONENTS;   <span class="comment">// 任务定义</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">TaskProcess</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">taskStart</span><span class="params">(TASK_COMPONENTS *newTASK,<span class="type">uint8_t</span> que)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">taskEnd</span><span class="params">(TASK_COMPONENTS *newTASK,<span class="type">uint8_t</span> que)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> TASK_COMPONENTS TaskComps[];</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>在<code>TSK_STM_core.cpp</code>中定义任务处理、任务使能、失能任务的具体内容，如下</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;TSK_STM_core.h&quot;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**************************************************************************************</span></span><br><span class="line"><span class="comment">* FunctionName   : TaskProcess()</span></span><br><span class="line"><span class="comment">* Description    : 任务处理</span></span><br><span class="line"><span class="comment">* EntryParameter : None</span></span><br><span class="line"><span class="comment">* ReturnValue    : None</span></span><br><span class="line"><span class="comment">**************************************************************************************/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TaskProcess</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">uint8_t</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;TASK_MAX; i++)           <span class="comment">// 逐个任务时间处理</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (TaskComps[i].Run)           <span class="comment">// 程序运行</span></span><br><span class="line">        &#123;</span><br><span class="line">			 TaskComps[i].<span class="built_in">TaskHook</span>();       <span class="comment">// 运行任务</span></span><br><span class="line">             TaskComps[i].Run = <span class="number">0</span>;          <span class="comment">// 标志清0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**************************************************************************************</span></span><br><span class="line"><span class="comment">* FunctionName   : taskStart</span></span><br><span class="line"><span class="comment">* Description    : 使能任务</span></span><br><span class="line"><span class="comment">* EntryParameter : None</span></span><br><span class="line"><span class="comment">* ReturnValue    : None</span></span><br><span class="line"><span class="comment">**************************************************************************************/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">taskStart</span><span class="params">(TASK_COMPONENTS *newTASK,<span class="type">uint8_t</span> que)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	 newTASK[que].Status=	TASK_ON;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**************************************************************************************</span></span><br><span class="line"><span class="comment">* FunctionName   : taskOff</span></span><br><span class="line"><span class="comment">* Description    : 失能任务</span></span><br><span class="line"><span class="comment">* EntryParameter : None</span></span><br><span class="line"><span class="comment">* ReturnValue    : None</span></span><br><span class="line"><span class="comment">**************************************************************************************/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">taskEnd</span><span class="params">(TASK_COMPONENTS *newTASK,<span class="type">uint8_t</span> que)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	 newTASK[que].Status=	TASK_OFF;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-设计用户任务"><a class="markdownIt-Anchor" href="#2-设计用户任务"></a> (2) 设计用户任务</h3>
+<ul>
+<li>利用上面任务结构体定义两个子任务，子任务的内容与前面一样。</li>
+<li>具体操作是：在<code>user_main.cpp</code>中，做如下声明或定义。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">Task_LED0</span><span class="params">(<span class="type">void</span>)</span></span>;<span class="comment">//任务1：翻转LED0</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">Task_UART2</span><span class="params">(<span class="type">void</span>)</span></span>;<span class="comment">//任务2：串口2发送数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义若干个任务：Status，Run，Timer，ItvTime，(*TaskHook)；</span></span><br><span class="line">TASK_COMPONENTS TaskComps[TASK_MAX] = </span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//&#123;Status, Run, Timer, ItvTime, *TaskHook&#125;</span></span><br><span class="line">	&#123;TASK_ON, <span class="number">0</span>, <span class="number">100</span>, <span class="number">500</span>, Task_LED0&#125;, <span class="comment">//任务1：执行周期500ms</span></span><br><span class="line">	&#123;TASK_ON, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1000</span>, Task_UART2&#125;, <span class="comment">//任务2：执行周期1000ms</span></span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+<ul>
+<li>在<code>user_loop()</code>函数中调用任务处理函数<code>TaskProcess()</code>，</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">user_loop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">TaskProcess</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>在<code>user_libs</code>文件夹中新建一组cpp文件，分别命名为<code>master_Control.cpp</code>和<code>master_Control.h</code>，专门用来存放用户自定义任务的具体内容</p>
+</li>
+<li>
+<p><code>master_Control.cpp</code>内程序如下：</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;master_Control.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Task_LED0</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">HAL_GPIO_TogglePin</span>(LED0_GPIO_Port,LED0_Pin);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Task_UART2</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">char</span> hello[] = <span class="string">&quot;Hello, World!\r\n&quot;</span>;</span><br><span class="line">	<span class="type">static</span> <span class="type">char</span> res[<span class="number">10</span>];</span><br><span class="line">	<span class="type">static</span> <span class="type">float</span> ticTime;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">sprintf</span>(res,<span class="string">&quot;%4.2f: &quot;</span>,ticTime);</span><br><span class="line">	ticTime+=<span class="number">0.1f</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//串口2发送字符串</span></span><br><span class="line">	<span class="built_in">HAL_UART_Transmit</span>(&amp;huart2,(<span class="type">uint8_t</span> *)res,std::<span class="built_in">strlen</span>(res),<span class="number">10</span>);</span><br><span class="line">	<span class="built_in">HAL_UART_Transmit</span>(&amp;huart2,(<span class="type">uint8_t</span> *)hello,std::<span class="built_in">strlen</span>(hello),<span class="number">10</span>);	</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>程序运行结果与第一部分类似。</p>
+<h1 id="三-总结"><a class="markdownIt-Anchor" href="#三-总结"></a> 三、总结</h1>
+<ul>
+<li>兼容c++之后，采用面向对象的思想来处理各硬件模块，提高程序的移植速度和开发效率；</li>
+<li>采用轮询机制来处理多任务，每个任务的参数会更加独立，比如执行周期、任务内容设计等；</li>
+<li>使得程序框架更加清晰，并尽可能地减少各任务之间的影响；</li>
+<li>用嘀嗒定时器统一管理各任务的运行周期，避免开启多个中断存在的中断嵌套的问题；</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">WALL-E</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://minhuanguo.github.io/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/">https://minhuanguo.github.io/2020/07/13/STM32CubeMx-based-HAL-CPP-Project-Template/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://minhuanguo.github.io">MH's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/STM32/">STM32</a><a class="post-meta__tags" href="/tags/template/">template</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/17/PMSM-Control-Based-on-STM32F103/"><i class="fa fa-chevron-left">  </i><span>PMSM Control Based on STM32F103</span></a></div><div class="next-post pull-right"><a href="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/"><span>基于STM32F103的BLDC开环控制(带霍尔传感器)</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/bg5.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2022 By WALL-E</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

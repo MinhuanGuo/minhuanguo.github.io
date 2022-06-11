@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="STM32_Encoder_PWM_Timer_GPIO"><meta name="keywords" content="STM32CubeMX,PWM"><meta name="author" content="WALL-E"><meta name="copyright" content="WALL-E"><title>STM32_Encoder_PWM_Timer_GPIO | MH's Blog</title><link rel="shortcut icon" href="/img/EVE.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 5.4.2"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90"><span class="toc-number">1.</span> <span class="toc-text"> 软&#x2F;硬件资源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.1.</span> <span class="toc-text"> 硬件开发平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.2.</span> <span class="toc-text"> 软件开发平台</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pwm%E6%B3%A2%E8%BE%93%E5%87%BA"><span class="toc-number">2.</span> <span class="toc-text"> PWM波输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text"> 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.2.</span> <span class="toc-text"> 程序实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%AD%E6%96%AD"><span class="toc-number">3.</span> <span class="toc-text"> 普通定时器中断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-2"><span class="toc-number">3.1.</span> <span class="toc-text"> 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0-2"><span class="toc-number">3.2.</span> <span class="toc-text"> 程序实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96ec11%E6%97%8B%E8%BD%AC%E7%BC%96%E7%A0%81%E5%99%A8%E7%9A%84%E8%BE%93%E5%85%A5"><span class="toc-number">4.</span> <span class="toc-text"> 读取EC11旋转编码器的输入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-3"><span class="toc-number">4.1.</span> <span class="toc-text"> 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0-3"><span class="toc-number">4.2.</span> <span class="toc-text"> 程序实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEgpio%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD"><span class="toc-number">5.</span> <span class="toc-text"> 设置GPIO按键中断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-4"><span class="toc-number">5.1.</span> <span class="toc-text"> 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0-4"><span class="toc-number">5.2.</span> <span class="toc-text"> 程序实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text"> 总结：</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/WallET.png"></div><div class="author-info__name text-center">WALL-E</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">9</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/bg5.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">MH's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/slides">幻灯</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">STM32_Encoder_PWM_Timer_GPIO</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-13</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>基于STM32CubeMX，配置STM32F103C8T6单片机的PWM波、普通定时器、旋转编码器以及GPIO按键中断。</p>
+<span id="more"></span>
+<h1 id="软硬件资源"><a class="markdownIt-Anchor" href="#软硬件资源"></a> 软/硬件资源</h1>
+<h2 id="硬件开发平台"><a class="markdownIt-Anchor" href="#硬件开发平台"></a> 硬件开发平台</h2>
+<ul>
+<li>开发基于STM32F103C8T6开发学习板，实物图如下：</li>
+</ul>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/STM32Board.jpg" width="70%">
+  <br>
+  <em>图：STM32F103C8T6开发学习板</em>
+</p>
+<ul>
+<li>该开发板的原理图如下：</li>
+</ul>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/STM32_Sch.png" width="100%">
+  <br>
+  <em>图：STM32F103C8T6开发板的原理图</em>
+</p>
+<ul>
+<li>
+<p>EC11带按键的旋转编码器，作为测试的输入设备，原理图如下：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/EC11_Sch.png" width="100%">
+  <br>
+  <em>图：EC11编码器测试原理图</em>
+</p>
+<p>EC11编码器A,B,C三个端口的内部连接示意图如下：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/rotary-encoder-arduino-wiring.png" width="60%">
+  <br>
+  <em>图：EC11编码器A、B、C端内部示意图</em>
+</p>
+<p>简单来说，A端和B端通过内部各自的一个开关连接到C端，旋钮旋转时，两个开关的闭合和断开存在时间差。</p>
+</li>
+<li>
+<p>EC11测试板实物图如下：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/EC11_Board.png" width="100%">
+  <br>
+  <em>图：EC11编码器测试板</em>
+</p>
+</li>
+<li>
+<p>本文各测试内容所使用到的资源：</p>
+<ul>
+<li>输出PWM波(<strong>PWM</strong>) ----- TIM3_CH4(PB1)</li>
+<li>普通定时器中断 ----- TIM4</li>
+<li>读取编码器输入(<strong>ECC-A，ECC-B</strong>) ----- TIM2_CH1(PA0)、TIM2_CH2(PA1)</li>
+<li>GPIO按键中断(<strong>ECC-K</strong>) ----- PB0</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件开发平台"><a class="markdownIt-Anchor" href="#软件开发平台"></a> 软件开发平台</h2>
+<ul>
+<li>
+<p>Keil V5.26.2.0</p>
+</li>
+<li>
+<p>STM32 CubeMx V5.6.1</p>
+<ul>
+<li>时钟配置：外置8M晶振，72M系统频率</li>
+</ul>
+</li>
+</ul>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/ClockConf.png" width="100%">
+  <br>
+</p>
+<h1 id="pwm波输出"><a class="markdownIt-Anchor" href="#pwm波输出"></a> PWM波输出</h1>
+<h2 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h2>
+<p>管脚PB1设置为TIM3_CH4，如下图：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/PWM_PB1.png" width="40%">
+  <br>
+</p>
+<p>对TIM3的详细参数配置如下图：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/PWM_PB1_TIM3.png" width="100%">
+  <br>
+</p>
+<p>具体来说，包括：</p>
+<ul>
+<li>启动Internal Clock</li>
+<li>启动Channel4中PWM Generation CH4</li>
+<li>预分配系数(PSC)设置为：71，</li>
+<li>PWM mode 1</li>
+<li>此处ARR和Pulse的值默认设置为0，将在程序中进行修改</li>
+<li>PSC和ARR的值将共同决定PWM波的频率<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>P</mi><mi>W</mi><mi>M</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{PWM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">W</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，Pulse的值将决定PWM的占空比。
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>P</mi><mi>W</mi><mi>M</mi></mrow></msub><mo>=</mo><mfrac><msub><mi>f</mi><mi>s</mi></msub><mrow><mo stretchy="false">(</mo><mi>P</mi><mi>S</mi><mi>C</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>A</mi><mi>R</mi><mi>R</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_{PWM}=\frac{f_s}{(PSC+1)(ARR+1)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">W</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.452216em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9322159999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">A</span><span class="mord mathdefault mtight" style="margin-right:0.00773em;">R</span><span class="mord mathdefault mtight" style="margin-right:0.00773em;">R</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-left:-0.10764em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>=</mo><mi>P</mi><mi>u</mi><mi>l</mi><mi>s</mi><mi>e</mi><mi mathvariant="normal">/</mi><mi>A</mi><mi>R</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">D=Pulse/ARR</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord">/</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span></li>
+</ul>
+</li>
+</ul>
+<h2 id="程序实现"><a class="markdownIt-Anchor" href="#程序实现"></a> 程序实现</h2>
+<p>在CubeMX中配置完成之后，点击“Generate Code”得到工程模板，将在<code>main.c</code>中自动生成PWM定时器的初始化配置：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MX_TIM3_Init</span>();</span><br></pre></td></tr></table></figure>
+<p>此外需要编写一个设置PWM频率和占空比的函数：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setPWM</span><span class="params">(TIM_HandleTypeDef timer, <span class="type">uint32_t</span> channel, <span class="type">uint16_t</span> period,<span class="type">uint16_t</span> pulse)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	 <span class="built_in">HAL_TIM_PWM_Stop</span>(&amp;timer, channel); <span class="comment">// stop generation of pwm</span></span><br><span class="line">	 TIM_OC_InitTypeDef sConfigOC;</span><br><span class="line">	 timer.Init.Period = period; <span class="comment">// set the period duration</span></span><br><span class="line">	 <span class="built_in">HAL_TIM_PWM_Init</span>(&amp;timer); <span class="comment">// reinititialise with new period value</span></span><br><span class="line">	 sConfigOC.OCMode = TIM_OCMODE_PWM1;</span><br><span class="line">	 sConfigOC.Pulse = pulse; <span class="comment">// set the pulse duration</span></span><br><span class="line">	 sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;</span><br><span class="line">	 sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;</span><br><span class="line">	 <span class="built_in">HAL_TIM_PWM_ConfigChannel</span>(&amp;timer, &amp;sConfigOC, channel);</span><br><span class="line">	 <span class="built_in">HAL_TIM_PWM_Start</span>(&amp;timer, channel); <span class="comment">// start pwm generation	</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在合适的地方调用上面的函数，即可产生对应管脚的PWM波输出，</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setPWM</span>(htim3, TIM_CHANNEL_4, <span class="number">999</span>, (<span class="type">int</span>)out); <span class="comment">//TIM3_CH4：PWM输出，1KHz</span></span><br><span class="line"><span class="comment">//第一个参数：表示timer3</span></span><br><span class="line"><span class="comment">//第二个参数：表示通道4</span></span><br><span class="line"><span class="comment">//第三个参数：用来设定PWM波的频率，计算方法：f=1MHz/(999+1)=1KHz，其他频率类比</span></span><br><span class="line"><span class="comment">//第四个参数：用来设定占空比，计算方法：D=out/999</span></span><br><span class="line">	<span class="comment">//当out=999时，占空比为1</span></span><br><span class="line">	<span class="comment">//当out=0时，占空比为0</span></span><br></pre></td></tr></table></figure>
+<h1 id="普通定时器中断"><a class="markdownIt-Anchor" href="#普通定时器中断"></a> 普通定时器中断</h1>
+<h2 id="配置-2"><a class="markdownIt-Anchor" href="#配置-2"></a> 配置</h2>
+<p>在CubeMX中配置TIM4定时器，内部时钟，频率配置成1KHz，如下图</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/Timer_TIM4.png" width="100%">
+  <br>
+</p>
+<p>定时周期计算方法：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>72</mn><mi>M</mi><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mn>71</mn><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>999</mn><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mi>μ</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">72M/(71+1)(999+1)=1\mu s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">7</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord">/</span><span class="mopen">(</span><span class="mord">7</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mopen">(</span><span class="mord">9</span><span class="mord">9</span><span class="mord">9</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord mathdefault">μ</span><span class="mord mathdefault">s</span></span></span></span></p>
+<p>启动中断服务函数：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/Timer_TIM4_NVIC.png" width="100%">
+  <br>
+</p>
+<h2 id="程序实现-2"><a class="markdownIt-Anchor" href="#程序实现-2"></a> 程序实现</h2>
+<p>类似的，<code>main.c</code>中会自动生成TIM4的初始化函数：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MX_TIM4_Init</span>();</span><br></pre></td></tr></table></figure>
+<p>手动初始化：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">HAL_TIM_Base_Start_IT</span>(&amp;htim4);<span class="comment">//普通定时器初始化</span></span><br></pre></td></tr></table></figure>
+<p>手动配置中断服务函数，在<code>/* USER CODE BEGIN 4 */</code>和<code>/* USER CODE END 4 */</code>之间，添加：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief  Period elapsed callback in non blocking mode</span></span><br><span class="line"><span class="comment">  * @param  htim: TIM handle</span></span><br><span class="line"><span class="comment">  * @retval None</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">		<span class="type">static</span> <span class="type">uint16_t</span> tmp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (htim-&gt;Instance == htim4.Instance)</span><br><span class="line">    &#123;</span><br><span class="line">			tmp++;</span><br><span class="line">			<span class="keyword">if</span>(tmp==<span class="number">1000</span>)<span class="comment">//1s timer</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">user_Timer_fun</span>();<span class="comment">//1s钟到，处理函数</span></span><br><span class="line"></span><br><span class="line">				tmp = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="读取ec11旋转编码器的输入"><a class="markdownIt-Anchor" href="#读取ec11旋转编码器的输入"></a> 读取EC11旋转编码器的输入</h1>
+<h2 id="配置-3"><a class="markdownIt-Anchor" href="#配置-3"></a> 配置</h2>
+<p>在CubeMX中配置PA0、PA1分别为TIM2_CH1和TIM2_CH2，TIM2的工作模式和参数设置如下：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/Encoder_Conf.png" width="100%">
+  <br>
+</p>
+<p>其中：</p>
+<ul>
+<li>PSC设置为3，表示4倍分频。这样，当用手旋转EC11编码器时，每一个“格”就表示“加1”或者“减1”；如果PSC设置为0，每一个“格”就表示“加4”或者“减4”.</li>
+<li>上面的例子中，ARR的值被设置为100，表示编码器的计数范围为0~100。ARR是一个16位的寄存器，因此最大计算值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>−</mo><mn>1</mn><mo>=</mo><mn>65535</mn></mrow><annotation encoding="application/x-tex">2^{16}-1=65535</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">5</span><span class="mord">5</span><span class="mord">3</span><span class="mord">5</span></span></span></span>.</li>
+</ul>
+<h2 id="程序实现-3"><a class="markdownIt-Anchor" href="#程序实现-3"></a> 程序实现</h2>
+<p>手动初始化：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">HAL_TIM_Encoder_Start</span>(&amp;htim2, TIM_CHANNEL_ALL);<span class="comment">//编码器初始化</span></span><br></pre></td></tr></table></figure>
+<p>在合适的地方读取编码器的值：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">uint32_t</span> enc1;</span><br><span class="line">enc1 = (<span class="type">uint32_t</span>)(__HAL_TIM_GET_COUNTER(&amp;htim2));<span class="comment">//获取编码器的值：0~100</span></span><br></pre></td></tr></table></figure>
+<h1 id="设置gpio按键中断"><a class="markdownIt-Anchor" href="#设置gpio按键中断"></a> 设置GPIO按键中断</h1>
+<h2 id="配置-4"><a class="markdownIt-Anchor" href="#配置-4"></a> 配置</h2>
+<p>GPIO-PB0配置如图，其中该管脚的<code>User Label</code>设置为“Encoder_Key”：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/GPIO_NVIC.png" width="100%">
+  <br>
+</p>
+<p>开启EXIT0中断：</p>
+<p align="center">
+  <img src="/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/GPIO_NVIC_EN.png" width="100%">
+  <br>
+</p>
+<h2 id="程序实现-4"><a class="markdownIt-Anchor" href="#程序实现-4"></a> 程序实现</h2>
+<p>手动配置中断服务函数，位置是<code>main.c</code>函数中<code>/* USER CODE BEGIN 4 */</code>和<code>/* USER CODE END 4 */</code>之间，添加：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_EXTI_Callback</span><span class="params">(<span class="type">uint16_t</span> GPIO_Pin)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(GPIO_Pin == Encoder_Key_Pin)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">HAL_GPIO_TogglePin</span>(LED0_GPIO_Port,LED0_Pin);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		__NOP();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结：</h1>
+<p>通过对<strong>TIM2</strong>、<strong>TIM3</strong>、<strong>TIM4</strong>进行配置，分别实现了<strong>编码器的读取</strong>、<strong>PWM波调节输出</strong>、<strong>普通定时器中断</strong>的功能。</p>
+<p>程序链接：<a target="_blank" rel="noopener" href="https://github.com/MinhuanGuo/STM32F103C8T6-Examples">STM32F103C8T6-Examples</a>/[03]_STM32_HAL_EC11_Encoder_CPP</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://simonmartin.ch/resources/stm32/dl/STM32%20Tutorial%2002%20-%20PWM%20Generation%20using%20HAL%20(and%20FreeRTOS).pdf">PWM generation on STM32 Microcontrollers using HAL </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qingwufeiyang12346/article/details/79810730">STM32开发笔记19: STM32CubeMX中定时器的配置方法</a></li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">WALL-E</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://minhuanguo.github.io/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/">https://minhuanguo.github.io/2020/06/13/STM32-Encoder-PWM-Timer-GPIO/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://minhuanguo.github.io">MH's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/STM32CubeMX/">STM32CubeMX</a><a class="post-meta__tags" href="/tags/PWM/">PWM</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/11/BLDC-Open-Control-Based-on-STM32F103/"><i class="fa fa-chevron-left">  </i><span>基于STM32F103的BLDC开环控制(带霍尔传感器)</span></a></div><div class="next-post pull-right"><a href="/2020/06/08/project-step-motor/"><span>基于Arduino单片机的步进电机控制系统设计</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/bg5.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2022 By WALL-E</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
